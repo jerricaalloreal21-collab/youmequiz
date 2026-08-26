@@ -6,7 +6,7 @@ import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, RELATIONSHIPS, tierFor } from "@/lib/game/copy";
 import { buildRounds } from "@/lib/game/generate";
-import { getGame, saveResult, shareUrl } from "@/lib/game/storage";
+import { fetchGame, saveResult, shareUrl, type FetchState } from "@/lib/game/storage";
 import { shareOrCopy } from "@/lib/share";
 import type { GameConfig, Question, Round } from "@/lib/game/types";
 
