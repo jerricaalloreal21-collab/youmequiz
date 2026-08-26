@@ -6,7 +6,7 @@ import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, RELATIONSHIPS, tierFor } from "@/lib/game/copy";
 import { buildRounds } from "@/lib/game/generate";
-import { getGame, saveResult, shareUrl } from "@/lib/game/storage";
+import { fetchGame, saveResult, shareUrl, type FetchState } from "@/lib/game/storage";
 import { shareOrCopy } from "@/lib/share";
 import type { GameConfig, Question, Round } from "@/lib/game/types";
 
@@ -33,25 +33,65 @@ type Phase = "intro" | "play" | "result";
 
 function PlayPage() {
   const { gameId } = Route.useParams();
-  const [game, setGame] = useState<GameConfig | null>(null);
-  const [ready, setReady] = useState(false);
+  const [state, setState] = useState<FetchState | null>(null);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    setGame(getGame(gameId));
-    setReady(true);
-  }, [gameId]);
+    let cancelled = false;
+    setState(null);
+    fetchGame(gameId).then((res) => {
+      if (!cancelled) setState(res);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [gameId, attempt]);
 
-  if (!ready) return <AppShell>{null}</AppShell>;
-  if (!game) {
+  if (!state) {
+    return (
+      <AppShell>
+        <div className="card-soft mt-10 p-6 text-center" aria-live="polite">
+          <span className="float-slow inline-block text-4xl" aria-hidden="true">
+            💌
+          </span>
+          <p className="mt-3 text-sm text-muted-foreground">Unwrapping your game…</p>
+        </div>
+      </AppShell>
+    );
+  }
+
+  if (state.status !== "found") {
+    const copyFor = {
+      "not-found": {
+        title: "This game doesn't exist",
+        body: "The link may have a typo, or the game was never finished. Double-check the link — or make your own.",
+      },
+      invalid: {
+        title: "That link doesn't look right",
+        body: "Game links look like /game/abc12xyz. Check the link you were sent, or make your own.",
+      },
+      error: {
+        title: "We couldn't load this game",
+        body: "Something went wrong reaching the server. Try again in a moment.",
+      },
+    }[state.status];
+
     return (
       <AppShell>
         <div className="card-soft mt-10 p-6 text-center">
-          <h1 className="text-2xl">This game isn't on this device</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            In this prototype games are stored locally, so links only open where they were made.
-            Make your own instead — it takes a minute.
-          </p>
-          <Button asChild variant="hero" size="pill" className="mt-4 w-full">
+          <h1 className="text-2xl">{copyFor.title}</h1>
+          <p className="mt-2 text-sm text-muted-foreground">{copyFor.body}</p>
+          {state.status === "error" && (
+            <Button
+              variant="soft"
+              size="pill"
+              className="mt-4 w-full"
+              onClick={() => setAttempt((a) => a + 1)}
+            >
+              <RotateCcw aria-hidden="true" /> Try again
+            </Button>
+          )}
+          <Button asChild variant="hero" size="pill" className="mt-3 w-full">
             <Link to="/create">Create a game</Link>
           </Button>
         </div>
@@ -59,7 +99,7 @@ function PlayPage() {
     );
   }
 
-  return <Player game={game} />;
+  return <Player game={state.game} />;
 }
 
 function Player({ game }: { game: GameConfig }) {

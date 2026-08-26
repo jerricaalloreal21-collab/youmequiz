@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { EDITIONS, PROMPTS, RELATIONSHIPS } from "@/lib/game/copy";
 import { defaultSecretMessage } from "@/lib/game/generate";
-import { newGameId, saveGame } from "@/lib/game/storage";
+import { createGame, newGameId } from "@/lib/game/storage";
 import type { Edition, GameAnswers, GameConfig, RelationshipType } from "@/lib/game/types";
 
 export const Route = createFileRoute("/create")({
@@ -50,6 +50,7 @@ function CreatePage() {
   const [captions, setCaptions] = useState(["", "", ""]);
   const [edition, setEdition] = useState<Edition>("full");
   const [secret, setSecret] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const promptStep = step >= 2 && step <= 6 ? PROMPTS[step - 2]! : null;
 
@@ -61,6 +62,7 @@ function CreatePage() {
   })();
 
   function next() {
+    if (saving) return;
     if (!canAdvance) {
       toast.error("Just this one field and we're moving on.");
       return;
@@ -72,7 +74,7 @@ function CreatePage() {
     setStep((s) => s + 1);
   }
 
-  function finish() {
+  async function finish() {
     const id = newGameId();
     const game: GameConfig = {
       id,
@@ -94,7 +96,13 @@ function CreatePage() {
       secretMessage: "",
     };
     game.secretMessage = secret.trim() || defaultSecretMessage(game);
-    saveGame(game);
+    setSaving(true);
+    const res = await createGame(game);
+    setSaving(false);
+    if (!res.ok) {
+      toast.error("Couldn't save your game. Check your connection and try again.");
+      return;
+    }
     navigate({ to: "/share/$gameId", params: { gameId: id } });
   }
 
@@ -303,10 +311,16 @@ function CreatePage() {
       </div>
 
       <div className="sticky bottom-4 mt-8">
-        <Button variant="hero" size="xl" className="w-full" onClick={next} disabled={!canAdvance}>
+        <Button
+          variant="hero"
+          size="xl"
+          className="w-full"
+          onClick={next}
+          disabled={!canAdvance || saving}
+        >
           {step === TOTAL_STEPS - 1 ? (
             <>
-              <Sparkles aria-hidden="true" /> Generate the game
+              <Sparkles aria-hidden="true" /> {saving ? "Saving your game…" : "Generate the game"}
             </>
           ) : (
             <>

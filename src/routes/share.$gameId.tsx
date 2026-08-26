@@ -6,7 +6,7 @@ import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, RELATIONSHIPS } from "@/lib/game/copy";
 import { allQuestions } from "@/lib/game/generate";
-import { getGame, shareUrl } from "@/lib/game/storage";
+import { fetchGame, shareUrl } from "@/lib/game/storage";
 import { copy, shareOrCopy } from "@/lib/share";
 import type { GameConfig } from "@/lib/game/types";
 
@@ -32,12 +32,27 @@ function SharePage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setGame(getGame(gameId));
+    let cancelled = false;
     setUrl(shareUrl(gameId));
-    setReady(true);
+    fetchGame(gameId).then((res) => {
+      if (cancelled) return;
+      setGame(res.status === "found" ? res.game : null);
+      setReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [gameId]);
 
-  if (!ready) return <AppShell>{null}</AppShell>;
+  if (!ready) {
+    return (
+      <AppShell>
+        <div className="card-soft mt-10 p-6 text-center" aria-live="polite">
+          <p className="text-sm text-muted-foreground">Wrapping it up…</p>
+        </div>
+      </AppShell>
+    );
+  }
 
   if (!game) {
     return (
@@ -45,7 +60,7 @@ function SharePage() {
         <div className="card-soft mt-10 p-6 text-center">
           <h1 className="text-2xl">Game not found</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Games live on the device that made them in this prototype.
+            We couldn't find a game with that link. Check the link, or make a new one.
           </p>
           <Button asChild variant="hero" size="pill" className="mt-4 w-full">
             <Link to="/create">Create a game</Link>

@@ -5,8 +5,7 @@ import { ArrowRight, Clock, Link2, Sparkles, Wand2 } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, RELATIONSHIPS } from "@/lib/game/copy";
-import { DEMO_GAME_ID, listGames, seedDemo } from "@/lib/game/storage";
-import type { GameConfig } from "@/lib/game/types";
+import { DEMO_GAME_ID, listMyGames, type MyGame } from "@/lib/game/storage";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,14 +27,11 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const [games, setGames] = useState<GameConfig[]>([]);
+  const [mine, setMine] = useState<MyGame[]>([]);
 
   useEffect(() => {
-    seedDemo();
-    setGames(listGames());
+    setMine(listMyGames().filter((g) => g.id !== DEMO_GAME_ID));
   }, []);
-
-  const mine = games.filter((g) => g.id !== DEMO_GAME_ID);
 
   return (
     <AppShell>
@@ -171,7 +167,7 @@ function Home() {
       </section>
 
       <footer className="mt-10 text-center text-xs text-muted-foreground">
-        Prototype build · everything is saved on this device only.
+        Prototype build · games are saved in the cloud, so any link works on any device.
       </footer>
     </AppShell>
   );
