@@ -311,10 +311,16 @@ function CreatePage() {
       </div>
 
       <div className="sticky bottom-4 mt-8">
-        <Button variant="hero" size="xl" className="w-full" onClick={next} disabled={!canAdvance}>
+        <Button
+          variant="hero"
+          size="xl"
+          className="w-full"
+          onClick={next}
+          disabled={!canAdvance || saving}
+        >
           {step === TOTAL_STEPS - 1 ? (
             <>
-              <Sparkles aria-hidden="true" /> Generate the game
+              <Sparkles aria-hidden="true" /> {saving ? "Saving your game…" : "Generate the game"}
             </>
           ) : (
             <>
