@@ -165,11 +165,18 @@ export function rememberMine(game: GameConfig) {
 }
 
 export function newGameId(): string {
+  // Unguessable public token: 14 chars from a 32-symbol alphabet (~70 bits).
   const chars = "abcdefghijkmnpqrstuvwxyz23456789";
+  const len = 14;
+  const bytes = new Uint8Array(len);
+  const c = typeof globalThis !== "undefined" ? globalThis.crypto : undefined;
+  if (c?.getRandomValues) c.getRandomValues(bytes);
+  else for (let i = 0; i < len; i++) bytes[i] = Math.floor(Math.random() * 256);
   let out = "";
-  for (let i = 0; i < 8; i++) out += chars[Math.floor(Math.random() * chars.length)];
+  for (let i = 0; i < len; i++) out += chars[bytes[i]! % chars.length];
   return out;
 }
+
 
 export function saveResult(result: PlayResult) {
   if (!isBrowser()) return;
