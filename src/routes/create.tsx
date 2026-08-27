@@ -16,16 +16,16 @@ import type { Edition, GameAnswers, GameConfig, RelationshipType } from "@/lib/g
 export const Route = createFileRoute("/create")({
   head: () => ({
     meta: [
-      { title: "Create a Game — The Us Game" },
+      { title: "Create your quiz — YouMeQuiz" },
       {
         name: "description",
         content:
           "Pick your relationship type, answer five quick prompts, and get a shareable personalized game in under a minute.",
       },
-      { property: "og:title", content: "Create a Game — The Us Game" },
+      { property: "og:title", content: "Create your quiz — YouMeQuiz" },
       {
         property: "og:description",
-        content: "Five prompts. One personalized game. Sixty seconds.",
+        content: "Five prompts. One personalized quiz. Sixty seconds.",
       },
     ],
   }),
@@ -320,7 +320,7 @@ function CreatePage() {
         >
           {step === TOTAL_STEPS - 1 ? (
             <>
-              <Sparkles aria-hidden="true" /> {saving ? "Saving your game…" : "Generate the game"}
+              <Sparkles aria-hidden="true" /> {saving ? "Saving your quiz…" : "Generate the quiz"}
             </>
           ) : (
             <>

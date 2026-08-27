@@ -13,7 +13,7 @@ import type { GameConfig, Question, Round } from "@/lib/game/types";
 export const Route = createFileRoute("/game/$gameId")({
   head: () => ({
     meta: [
-      { title: "Play — The Us Game" },
+      { title: "Play a quiz — YouMeQuiz" },
       {
         name: "description",
         content:
@@ -63,15 +63,15 @@ function PlayPage() {
   if (state.status !== "found") {
     const copyFor = {
       "not-found": {
-        title: "This game doesn't exist",
-        body: "The link may have a typo, or the game was never finished. Double-check the link — or make your own.",
+        title: "This quiz doesn't exist",
+        body: "The link may have a typo, or the quiz was never finished. Double-check the link — or make your own.",
       },
       invalid: {
         title: "That link doesn't look right",
         body: "Game links look like /game/abc12xyz. Check the link you were sent, or make your own.",
       },
       error: {
-        title: "We couldn't load this game",
+        title: "We couldn't load this quiz",
         body: "Something went wrong reaching the server. Try again in a moment.",
       },
     }[state.status];
@@ -92,7 +92,7 @@ function PlayPage() {
             </Button>
           )}
           <Button asChild variant="hero" size="pill" className="mt-3 w-full">
-            <Link to="/create">Create a game</Link>
+            <Link to="/create">Create a quiz</Link>
           </Button>
         </div>
       </AppShell>
@@ -308,8 +308,8 @@ function Player({ game }: { game: GameConfig }) {
           onClick={() =>
             shareOrCopy(
               url,
-              "The Us Game",
-              `I scored ${score}/${flat.length} on ${game.creatorName}'s game. Think you'd do better?`,
+              "YouMeQuiz",
+              `I scored ${score}/${flat.length} on ${game.creatorName}'s quiz. Think you'd do better?`,
             )
           }
         >
@@ -350,7 +350,7 @@ function QuestionView({
     <div>
       <div className="flex items-center justify-between gap-3 pt-1">
         <Link to="/" className="text-xs font-semibold text-muted-foreground">
-          The Us Game
+          YouMeQuiz
         </Link>
         <p className="text-xs font-semibold text-muted-foreground" aria-live="polite">
           {index + 1} / {total}

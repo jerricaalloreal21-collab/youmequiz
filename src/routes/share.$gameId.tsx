@@ -13,12 +13,12 @@ import type { GameConfig } from "@/lib/game/types";
 export const Route = createFileRoute("/share/$gameId")({
   head: () => ({
     meta: [
-      { title: "Your game is ready — The Us Game" },
+      { title: "Your quiz is ready — YouMeQuiz" },
       {
         name: "description",
         content: "Copy the link and send your personalized game to the one person it's about.",
       },
-      { property: "og:title", content: "Your game is ready — The Us Game" },
+      { property: "og:title", content: "Your quiz is ready — YouMeQuiz" },
       { property: "og:description", content: "One link. One very specific person." },
     ],
   }),
@@ -63,7 +63,7 @@ function SharePage() {
             We couldn't find a game with that link. Check the link, or make a new one.
           </p>
           <Button asChild variant="hero" size="pill" className="mt-4 w-full">
-            <Link to="/create">Create a game</Link>
+            <Link to="/create">Create a quiz</Link>
           </Button>
         </div>
       </AppShell>
@@ -97,7 +97,7 @@ function SharePage() {
             onClick={() =>
               shareOrCopy(
                 url,
-                "The Us Game",
+                "YouMeQuiz",
                 `${game.recipientName}, how well do you actually know ${game.creatorName}?`,
               )
             }
@@ -124,7 +124,7 @@ function SharePage() {
       <div className="mt-5 flex flex-col gap-2.5">
         <Button asChild variant="soft" size="xl" className="w-full">
           <Link to="/game/$gameId" params={{ gameId: game.id }}>
-            <Play aria-hidden="true" /> Preview the game
+            <Play aria-hidden="true" /> Preview the quiz
           </Link>
         </Button>
         <Button asChild variant="ghost" size="pill" className="w-full">
