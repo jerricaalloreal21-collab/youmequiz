@@ -63,7 +63,7 @@ function SharePage() {
             We couldn't find a game with that link. Check the link, or make a new one.
           </p>
           <Button asChild variant="hero" size="pill" className="mt-4 w-full">
-            <Link to="/create">Create a game</Link>
+            <Link to="/create">Create a quiz</Link>
           </Button>
         </div>
       </AppShell>
