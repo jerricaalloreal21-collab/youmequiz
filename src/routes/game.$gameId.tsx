@@ -13,7 +13,7 @@ import type { GameConfig, Question, Round } from "@/lib/game/types";
 export const Route = createFileRoute("/game/$gameId")({
   head: () => ({
     meta: [
-      { title: "Play — The Us Game" },
+      { title: "Play a quiz — YouMeQuiz" },
       {
         name: "description",
         content:
@@ -308,8 +308,8 @@ function Player({ game }: { game: GameConfig }) {
           onClick={() =>
             shareOrCopy(
               url,
-              "The Us Game",
-              `I scored ${score}/${flat.length} on ${game.creatorName}'s game. Think you'd do better?`,
+              "YouMeQuiz",
+              `I scored ${score}/${flat.length} on ${game.creatorName}'s quiz. Think you'd do better?`,
             )
           }
         >
@@ -350,7 +350,7 @@ function QuestionView({
     <div>
       <div className="flex items-center justify-between gap-3 pt-1">
         <Link to="/" className="text-xs font-semibold text-muted-foreground">
-          The Us Game
+          YouMeQuiz
         </Link>
         <p className="text-xs font-semibold text-muted-foreground" aria-live="polite">
           {index + 1} / {total}

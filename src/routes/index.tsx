@@ -10,16 +10,16 @@ import { DEMO_GAME_ID, listMyGames, type MyGame } from "@/lib/game/storage";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "The Us Game — Make a game about you two in 60 seconds" },
+      { title: "YouMeQuiz — You know me. But how well?" },
       {
         name: "description",
         content:
           "Answer five quick prompts and get a personalized 10-question game about your person. Share the link, no accounts, no downloads.",
       },
-      { property: "og:title", content: "The Us Game" },
+      { property: "og:title", content: "YouMeQuiz" },
       {
         property: "og:description",
-        content: "Your relationship. Your memories. Your game.",
+        content: "Five prompts, one personalized quiz, one link. No accounts, no downloads.",
       },
     ],
   }),
@@ -38,30 +38,28 @@ function Home() {
       <section className="rise-in pt-4">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs font-semibold text-muted-foreground">
           <Sparkles className="size-3.5 text-primary" aria-hidden="true" />
-          Made for one specific person
+          You know me. But how well?
         </div>
-        <h1 className="text-[2.6rem] leading-[1.05]">
-          Your relationship.
+        <h1 className="text-[2.6rem] font-extrabold leading-[1.05]">
+          You know me.
           <br />
-          Your memories.
-          <br />
-          <span className="text-warm">Your game.</span>
+          But <span className="text-warm">how well?</span>
         </h1>
         <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-          Answer five nosy questions about your person. We turn them into a playable game, then you
+          Answer five nosy questions about your person. YouMeQuiz turns them into a playable quiz —
           send the link and find out how well they actually know you.
         </p>
 
         <div className="mt-6 flex flex-col gap-3">
           <Button asChild variant="hero" size="xl" className="w-full">
             <Link to="/create">
-              Create a Game
+              Create your quiz
               <ArrowRight aria-hidden="true" />
             </Link>
           </Button>
           <Button asChild variant="soft" size="xl" className="w-full">
             <Link to="/game/$gameId" params={{ gameId: DEMO_GAME_ID }}>
-              Play the demo game
+              Play the demo quiz
             </Link>
           </Button>
         </div>
@@ -81,7 +79,7 @@ function Home() {
 
       {mine.length > 0 && (
         <section className="mt-9">
-          <h2 className="text-lg">Your games</h2>
+          <h2 className="text-lg">Your quizzes</h2>
           <ul className="mt-3 space-y-2">
             {mine.map((g) => (
               <li key={g.id}>
@@ -134,7 +132,7 @@ function Home() {
       <section className="mt-10">
         <h2 className="text-xl">Editions</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Nothing is charged in this prototype — paid tiers are unlocked for demo purposes.
+          Nothing is charged during beta — paid tiers are unlocked for now.
         </p>
         <div className="mt-3 space-y-2.5">
           {(["free", "full", "memory"] as const).map((key) => {
@@ -167,7 +165,7 @@ function Home() {
       </section>
 
       <footer className="mt-10 text-center text-xs text-muted-foreground">
-        Prototype build · games are saved in the cloud, so any link works on any device.
+        YouMeQuiz beta · quizzes are saved in the cloud, so any link works on any device.
       </footer>
     </AppShell>
   );
