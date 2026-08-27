@@ -79,16 +79,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "The Us Game — Your relationship. Your memories. Your game." },
+      { title: "YouMeQuiz — You know me. But how well?" },
       {
         name: "description",
         content:
-          "Build a personalized mini-game about you and someone you love in about 60 seconds. Share the link, watch them squirm.",
+          "YouMeQuiz turns five quick prompts into a personalized 10-question quiz about you two. Share the link, watch them squirm.",
       },
-      { property: "og:title", content: "The Us Game" },
+      { property: "og:title", content: "YouMeQuiz" },
       {
         property: "og:description",
-        content: "Your relationship. Your memories. Your game.",
+        content: "You know me. But how well? Make a personalized quiz about you two in 60 seconds.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -102,7 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
