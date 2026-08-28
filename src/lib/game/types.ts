@@ -26,7 +26,10 @@ export interface GameConfig {
   answers: GameAnswers;
   photos: PhotoPlaceholder[];
   edition: Edition;
+  /** True only after server-side payment verification (free games are always playable). */
+  paid: boolean;
   secretMessage: string;
+
 }
 
 export type RoundId = "know" | "receipts" | "predict";

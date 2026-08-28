@@ -32,6 +32,7 @@ export const DEMO_GAME: GameConfig = {
     { id: "p3", caption: "Noodle place, 12:40am" },
   ],
   edition: "memory",
+  paid: true,
   secretMessage:
     "Jae — if you got every one of these wrong I'd still pick you. Also the cone stays in the car. Non-negotiable. 💛",
 };
@@ -57,6 +58,7 @@ type GameRow = {
   answers: unknown;
   photos: unknown;
   edition: string;
+  paid: boolean;
   secret_message: string;
 };
 
@@ -77,6 +79,7 @@ function rowToGame(row: GameRow): GameConfig {
     },
     photos: Array.isArray(row.photos) ? (row.photos as GameConfig["photos"]) : [],
     edition: row.edition as Edition,
+    paid: Boolean(row.paid),
     secretMessage: row.secret_message ?? "",
   };
 }
@@ -95,7 +98,7 @@ export async function fetchGame(id: string): Promise<FetchState> {
     const { data, error } = await supabase
       .from("games")
       .select(
-        "id, created_at, relationship, creator_name, recipient_name, answers, photos, edition, secret_message",
+        "id, created_at, relationship, creator_name, recipient_name, answers, photos, edition, paid, secret_message",
       )
       .eq("id", id)
       .maybeSingle();
