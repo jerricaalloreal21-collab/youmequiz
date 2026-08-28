@@ -14,6 +14,59 @@ export type Database = {
   }
   public: {
     Tables: {
+      game_payments: {
+        Row: {
+          amount_cents: number
+          checkout_url: string | null
+          created_at: string
+          currency: string
+          edition: string
+          environment: string
+          game_id: string
+          id: string
+          square_order_id: string | null
+          square_payment_link_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount_cents: number
+          checkout_url?: string | null
+          created_at?: string
+          currency?: string
+          edition: string
+          environment?: string
+          game_id: string
+          id?: string
+          square_order_id?: string | null
+          square_payment_link_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount_cents?: number
+          checkout_url?: string | null
+          created_at?: string
+          currency?: string
+          edition?: string
+          environment?: string
+          game_id?: string
+          id?: string
+          square_order_id?: string | null
+          square_payment_link_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_payments_game_id_fkey"
+            columns: ["game_id"]
+            isOneToOne: false
+            referencedRelation: "games"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       games: {
         Row: {
           answers: Json
@@ -21,6 +74,8 @@ export type Database = {
           creator_name: string
           edition: string
           id: string
+          paid: boolean
+          paid_at: string | null
           photos: Json
           recipient_name: string
           relationship: string
@@ -33,6 +88,8 @@ export type Database = {
           creator_name: string
           edition?: string
           id: string
+          paid?: boolean
+          paid_at?: string | null
           photos?: Json
           recipient_name: string
           relationship: string
@@ -45,6 +102,8 @@ export type Database = {
           creator_name?: string
           edition?: string
           id?: string
+          paid?: boolean
+          paid_at?: string | null
           photos?: Json
           recipient_name?: string
           relationship?: string
