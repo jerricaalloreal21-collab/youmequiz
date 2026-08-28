@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreateRouteImport } from './routes/create'
+import { Route as CheckoutGameIdRouteImport } from './routes/checkout.$gameId'
 import { Route as GameGameIdRouteImport } from './routes/game.$gameId'
 import { Route as ShareGameIdRouteImport } from './routes/share.$gameId'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const CreateRoute = CreateRouteImport.update({
   id: '/create',
   path: '/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutGameIdRoute = CheckoutGameIdRouteImport.update({
+  id: '/checkout/$gameId',
+  path: '/checkout/$gameId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GameGameIdRoute = GameGameIdRouteImport.update({
@@ -38,12 +44,14 @@ const ShareGameIdRoute = ShareGameIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
+  '/checkout/$gameId': typeof CheckoutGameIdRoute
   '/game/$gameId': typeof GameGameIdRoute
   '/share/$gameId': typeof ShareGameIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
+  '/checkout/$gameId': typeof CheckoutGameIdRoute
   '/game/$gameId': typeof GameGameIdRoute
   '/share/$gameId': typeof ShareGameIdRoute
 }
@@ -51,20 +59,29 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
+  '/checkout/$gameId': typeof CheckoutGameIdRoute
   '/game/$gameId': typeof GameGameIdRoute
   '/share/$gameId': typeof ShareGameIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/create' | '/game/$gameId' | '/share/$gameId'
+  fullPaths:
+    '/' | '/create' | '/checkout/$gameId' | '/game/$gameId' | '/share/$gameId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/create' | '/game/$gameId' | '/share/$gameId'
-  id: '__root__' | '/' | '/create' | '/game/$gameId' | '/share/$gameId'
+  to: '/' | '/create' | '/checkout/$gameId' | '/game/$gameId' | '/share/$gameId'
+  id:
+    | '__root__'
+    | '/'
+    | '/create'
+    | '/checkout/$gameId'
+    | '/game/$gameId'
+    | '/share/$gameId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreateRoute: typeof CreateRoute
+  CheckoutGameIdRoute: typeof CheckoutGameIdRoute
   GameGameIdRoute: typeof GameGameIdRoute
   ShareGameIdRoute: typeof ShareGameIdRoute
 }
@@ -83,6 +100,13 @@ declare module '@tanstack/react-router' {
       path: '/create'
       fullPath: '/create'
       preLoaderRoute: typeof CreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/$gameId': {
+      id: '/checkout/$gameId'
+      path: '/checkout/$gameId'
+      fullPath: '/checkout/$gameId'
+      preLoaderRoute: typeof CheckoutGameIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/game/$gameId': {
@@ -105,6 +129,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateRoute: CreateRoute,
+  CheckoutGameIdRoute: CheckoutGameIdRoute,
   GameGameIdRoute: GameGameIdRoute,
   ShareGameIdRoute: ShareGameIdRoute,
 }
