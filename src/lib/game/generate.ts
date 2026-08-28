@@ -1,3 +1,4 @@
+import { effectiveEdition } from "./entitlement";
 import type { GameConfig, Question, Round } from "./types";
 
 /* Deterministic seeded RNG so a game link always produces the same game. */
@@ -228,7 +229,7 @@ export function buildRounds(game: GameConfig): Round[] {
     ),
   ];
 
-  const limit = game.edition === "free" ? 5 : 10;
+  const limit = effectiveEdition(game) === "free" ? 5 : 10;
   const all: Round[] = [
     {
       id: "know",

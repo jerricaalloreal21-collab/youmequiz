@@ -22,14 +22,14 @@ export const EDITIONS: Record<
   },
   full: {
     label: "Full Game",
-    price: "$1.99",
-    badge: "Demo unlocked",
+    price: "$2.99",
+    badge: "Sandbox checkout",
     perks: ["10 personalized questions", "All 3 rounds", "Playful transitions"],
   },
   memory: {
     label: "Memory Edition",
-    price: "$3.99",
-    badge: "Demo unlocked",
+    price: "$4.99",
+    badge: "Sandbox checkout",
     perks: ["Everything in Full", "Photo memories", "Secret ending message"],
   },
 };

@@ -93,6 +93,7 @@ function CreatePage() {
         .map((c, i) => ({ id: `p${i + 1}`, caption: c.trim() }))
         .filter((p) => p.caption.length > 0),
       edition,
+      paid: false,
       secretMessage: "",
     };
     game.secretMessage = secret.trim() || defaultSecretMessage(game);
@@ -101,6 +102,10 @@ function CreatePage() {
     setSaving(false);
     if (!res.ok) {
       toast.error("Couldn't save your game. Check your connection and try again.");
+      return;
+    }
+    if (edition !== "free") {
+      navigate({ to: "/checkout/$gameId", params: { gameId: id } });
       return;
     }
     navigate({ to: "/share/$gameId", params: { gameId: id } });
@@ -269,7 +274,7 @@ function CreatePage() {
           <div>
             <h1 className="text-3xl">Pick an edition</h1>
             <p className="mt-2 text-sm text-muted-foreground">
-              Paid tiers are unlocked for this demo. No payment is taken and no card is requested.
+              Paid editions use Square sandbox checkout — test cards only, no real money moves.
             </p>
             <div className="mt-5 space-y-2.5">
               {(["free", "full", "memory"] as const).map((key) => {
@@ -294,7 +299,7 @@ function CreatePage() {
                     <p className="mt-1 text-sm text-muted-foreground">{ed.perks.join(" · ")}</p>
                     {ed.badge && (
                       <span className="mt-2 inline-block rounded-full bg-highlight px-2.5 py-1 text-[11px] font-bold text-highlight-foreground">
-                        {ed.badge} — nothing charged
+                        {ed.badge} — test mode
                       </span>
                     )}
                     {active && (
@@ -320,7 +325,12 @@ function CreatePage() {
         >
           {step === TOTAL_STEPS - 1 ? (
             <>
-              <Sparkles aria-hidden="true" /> {saving ? "Saving your quiz…" : "Generate the quiz"}
+              <Sparkles aria-hidden="true" />{" "}
+              {saving
+                ? "Saving your quiz…"
+                : edition === "free"
+                  ? "Generate the quiz"
+                  : "Continue to checkout"}
             </>
           ) : (
             <>
