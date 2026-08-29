@@ -6,6 +6,7 @@ import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, RELATIONSHIPS, tierFor } from "@/lib/game/copy";
 import { buildRounds } from "@/lib/game/generate";
+import { effectiveEdition } from "@/lib/game/entitlement";
 import { fetchGame, saveResult, shareUrl, type FetchState } from "@/lib/game/storage";
 import { shareOrCopy } from "@/lib/share";
 import type { GameConfig, Question, Round } from "@/lib/game/types";
@@ -238,7 +239,7 @@ function Player({ game }: { game: GameConfig }) {
         />
       </div>
 
-      {game.photos.length > 0 && game.edition === "memory" && (
+      {game.photos.length > 0 && effectiveEdition(game) === "memory" && (
         <section className="mt-7">
           <h2 className="text-lg">Memory cards</h2>
           <div className="mt-3 space-y-2.5">
@@ -265,7 +266,7 @@ function Player({ game }: { game: GameConfig }) {
       )}
 
       <section className="mt-7">
-        {game.edition === "memory" ? (
+        {effectiveEdition(game) === "memory" ? (
           secretOpen ? (
             <div className="card-soft pop-in bg-warm p-5">
               <p className="text-xs font-bold uppercase tracking-wider text-primary-foreground/80">
@@ -291,7 +292,8 @@ function Player({ game }: { game: GameConfig }) {
             <Lock className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
             <p className="text-sm text-muted-foreground">
               The secret ending message is part of the {EDITIONS.memory.label} (
-              {EDITIONS.memory.price}) — unlocked in demos, not sold yet.
+              {EDITIONS.memory.price}). This quiz is on the {EDITIONS[effectiveEdition(game)].label}
+              tier, so it stays sealed.
             </p>
           </div>
         )}
