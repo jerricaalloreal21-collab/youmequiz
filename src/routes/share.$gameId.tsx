@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Copy, PartyPopper, Play, Share2 } from "lucide-react";
+import { Copy, Lock, PartyPopper, Play, Share2, Sparkles } from "lucide-react";
 
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 import { EDITIONS, RELATIONSHIPS } from "@/lib/game/copy";
+import { effectiveEdition, isLocked } from "@/lib/game/entitlement";
 import { allQuestions } from "@/lib/game/generate";
 import { fetchGame, shareUrl } from "@/lib/game/storage";
 import { copy, shareOrCopy } from "@/lib/share";
@@ -71,6 +72,8 @@ function SharePage() {
   }
 
   const count = allQuestions(game).length;
+  const locked = isLocked(game);
+  const active = effectiveEdition(game);
 
   return (
     <AppShell>
@@ -117,9 +120,35 @@ function SharePage() {
         </p>
         <p className="mt-1 text-xs text-muted-foreground">
           {game.photos.length} memory card{game.photos.length === 1 ? "" : "s"} · secret ending{" "}
-          {game.edition === "memory" ? "included" : "hidden on this tier"}
+          {active === "memory" ? "included" : "hidden on this tier"}
         </p>
       </div>
+
+      {locked && (
+        <div className="card-soft mt-4 p-4">
+          <p className="flex items-center gap-2 text-sm font-semibold">
+            <Lock className="size-4 shrink-0 text-primary" aria-hidden="true" />
+            {EDITIONS[game.edition].label} isn't unlocked yet
+          </p>
+          <p className="mt-1.5 text-xs text-muted-foreground">
+            Until the payment is confirmed, this link plays as the {EDITIONS.free.label} — 5
+            questions, no memory cards or secret ending. Unlocking is a one-time{" "}
+            {EDITIONS[game.edition].price} payment and the link stays the same.
+          </p>
+          <Button asChild variant="hero" size="pill" className="mt-3 w-full">
+            <Link to="/checkout/$gameId" params={{ gameId: game.id }}>
+              <Sparkles aria-hidden="true" /> Unlock {EDITIONS[game.edition].label} for{" "}
+              {EDITIONS[game.edition].price}
+            </Link>
+          </Button>
+        </div>
+      )}
+
+      {game.paid && (
+        <p className="mt-3 text-center text-xs font-semibold text-primary">
+          Payment confirmed — {EDITIONS[game.edition].label} unlocked.
+        </p>
+      )}
 
       <div className="mt-5 flex flex-col gap-2.5">
         <Button asChild variant="soft" size="xl" className="w-full">
