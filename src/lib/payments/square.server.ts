@@ -72,6 +72,13 @@ async function squareFetch<T>(
       `Square returned ${res.status}`;
     // Log server-side only; never surface tokens or raw payloads to the client.
     console.error("[square] request failed", path, res.status, detail);
+    if (/location id/i.test(detail)) {
+      return {
+        ok: false,
+        message:
+          "Square rejected the configured location. Check that SQUARE_LOCATION_ID is the full sandbox location ID.",
+      };
+    }
     return { ok: false, message: detail };
   }
   return { ok: true, data: json as T };
