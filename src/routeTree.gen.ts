@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CreateRouteImport } from './routes/create'
+import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as CheckoutGameIdRouteImport } from './routes/checkout.$gameId'
 import { Route as GameGameIdRouteImport } from './routes/game.$gameId'
 import { Route as PayGameIdRouteImport } from './routes/pay.$gameId'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const CreateRoute = CreateRouteImport.update({
   id: '/create',
   path: '/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutGameIdRoute = CheckoutGameIdRouteImport.update({
@@ -50,6 +56,7 @@ const ShareGameIdRoute = ShareGameIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
+  '/quiz': typeof QuizRoute
   '/checkout/$gameId': typeof CheckoutGameIdRoute
   '/game/$gameId': typeof GameGameIdRoute
   '/pay/$gameId': typeof PayGameIdRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
+  '/quiz': typeof QuizRoute
   '/checkout/$gameId': typeof CheckoutGameIdRoute
   '/game/$gameId': typeof GameGameIdRoute
   '/pay/$gameId': typeof PayGameIdRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/create': typeof CreateRoute
+  '/quiz': typeof QuizRoute
   '/checkout/$gameId': typeof CheckoutGameIdRoute
   '/game/$gameId': typeof GameGameIdRoute
   '/pay/$gameId': typeof PayGameIdRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/create'
+    | '/quiz'
     | '/checkout/$gameId'
     | '/game/$gameId'
     | '/pay/$gameId'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/create'
+    | '/quiz'
     | '/checkout/$gameId'
     | '/game/$gameId'
     | '/pay/$gameId'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/create'
+    | '/quiz'
     | '/checkout/$gameId'
     | '/game/$gameId'
     | '/pay/$gameId'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CreateRoute: typeof CreateRoute
+  QuizRoute: typeof QuizRoute
   CheckoutGameIdRoute: typeof CheckoutGameIdRoute
   GameGameIdRoute: typeof GameGameIdRoute
   PayGameIdRoute: typeof PayGameIdRoute
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/create'
       fullPath: '/create'
       preLoaderRoute: typeof CreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout/$gameId': {
@@ -158,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CreateRoute: CreateRoute,
+  QuizRoute: QuizRoute,
   CheckoutGameIdRoute: CheckoutGameIdRoute,
   GameGameIdRoute: GameGameIdRoute,
   PayGameIdRoute: PayGameIdRoute,
