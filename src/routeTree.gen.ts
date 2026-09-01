@@ -10,21 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CreateRouteImport } from './routes/create'
 import { Route as QuizRouteImport } from './routes/quiz'
-import { Route as CheckoutGameIdRouteImport } from './routes/checkout.$gameId'
-import { Route as GameGameIdRouteImport } from './routes/game.$gameId'
-import { Route as PayGameIdRouteImport } from './routes/pay.$gameId'
-import { Route as ShareGameIdRouteImport } from './routes/share.$gameId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CreateRoute = CreateRouteImport.update({
-  id: '/create',
-  path: '/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizRoute = QuizRouteImport.update({
@@ -32,93 +22,31 @@ const QuizRoute = QuizRouteImport.update({
   path: '/quiz',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CheckoutGameIdRoute = CheckoutGameIdRouteImport.update({
-  id: '/checkout/$gameId',
-  path: '/checkout/$gameId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const GameGameIdRoute = GameGameIdRouteImport.update({
-  id: '/game/$gameId',
-  path: '/game/$gameId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PayGameIdRoute = PayGameIdRouteImport.update({
-  id: '/pay/$gameId',
-  path: '/pay/$gameId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ShareGameIdRoute = ShareGameIdRouteImport.update({
-  id: '/share/$gameId',
-  path: '/share/$gameId',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/create': typeof CreateRoute
   '/quiz': typeof QuizRoute
-  '/checkout/$gameId': typeof CheckoutGameIdRoute
-  '/game/$gameId': typeof GameGameIdRoute
-  '/pay/$gameId': typeof PayGameIdRoute
-  '/share/$gameId': typeof ShareGameIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/create': typeof CreateRoute
   '/quiz': typeof QuizRoute
-  '/checkout/$gameId': typeof CheckoutGameIdRoute
-  '/game/$gameId': typeof GameGameIdRoute
-  '/pay/$gameId': typeof PayGameIdRoute
-  '/share/$gameId': typeof ShareGameIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/create': typeof CreateRoute
   '/quiz': typeof QuizRoute
-  '/checkout/$gameId': typeof CheckoutGameIdRoute
-  '/game/$gameId': typeof GameGameIdRoute
-  '/pay/$gameId': typeof PayGameIdRoute
-  '/share/$gameId': typeof ShareGameIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/create'
-    | '/quiz'
-    | '/checkout/$gameId'
-    | '/game/$gameId'
-    | '/pay/$gameId'
-    | '/share/$gameId'
+  fullPaths: '/' | '/quiz'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/create'
-    | '/quiz'
-    | '/checkout/$gameId'
-    | '/game/$gameId'
-    | '/pay/$gameId'
-    | '/share/$gameId'
-  id:
-    | '__root__'
-    | '/'
-    | '/create'
-    | '/quiz'
-    | '/checkout/$gameId'
-    | '/game/$gameId'
-    | '/pay/$gameId'
-    | '/share/$gameId'
+  to: '/' | '/quiz'
+  id: '__root__' | '/' | '/quiz'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CreateRoute: typeof CreateRoute
   QuizRoute: typeof QuizRoute
-  CheckoutGameIdRoute: typeof CheckoutGameIdRoute
-  GameGameIdRoute: typeof GameGameIdRoute
-  PayGameIdRoute: typeof PayGameIdRoute
-  ShareGameIdRoute: typeof ShareGameIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -130,13 +58,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/create': {
-      id: '/create'
-      path: '/create'
-      fullPath: '/create'
-      preLoaderRoute: typeof CreateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/quiz': {
       id: '/quiz'
       path: '/quiz'
@@ -144,45 +65,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuizRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkout/$gameId': {
-      id: '/checkout/$gameId'
-      path: '/checkout/$gameId'
-      fullPath: '/checkout/$gameId'
-      preLoaderRoute: typeof CheckoutGameIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/game/$gameId': {
-      id: '/game/$gameId'
-      path: '/game/$gameId'
-      fullPath: '/game/$gameId'
-      preLoaderRoute: typeof GameGameIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pay/$gameId': {
-      id: '/pay/$gameId'
-      path: '/pay/$gameId'
-      fullPath: '/pay/$gameId'
-      preLoaderRoute: typeof PayGameIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/share/$gameId': {
-      id: '/share/$gameId'
-      path: '/share/$gameId'
-      fullPath: '/share/$gameId'
-      preLoaderRoute: typeof ShareGameIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CreateRoute: CreateRoute,
   QuizRoute: QuizRoute,
-  CheckoutGameIdRoute: CheckoutGameIdRoute,
-  GameGameIdRoute: GameGameIdRoute,
-  PayGameIdRoute: PayGameIdRoute,
-  ShareGameIdRoute: ShareGameIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
