@@ -1,116 +1,107 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { ArrowRight, Clock, Link2, Sparkles, Wand2 } from "lucide-react";
+import { ArrowRight, Clock, Lock, ShieldCheck, Sparkles } from "lucide-react";
 
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
-import { EDITIONS, RELATIONSHIPS } from "@/lib/game/copy";
-import { DEMO_GAME_ID, listMyGames, type MyGame } from "@/lib/game/storage";
+
+const COMING_SOON = [
+  { emoji: "💗", title: "How Do You Feel Most Loved?", blurb: "The signals that actually land for you." },
+  { emoji: "🌩️", title: "What Triggers Your Stress Response?", blurb: "Your personal pressure points, mapped." },
+  { emoji: "🧷", title: "What's Your Attachment Style?", blurb: "How you move toward and away from closeness." },
+  { emoji: "🚧", title: "How Strong Are Your Boundaries?", blurb: "Where you hold the line — and where you don't." },
+  { emoji: "🧭", title: "Which Personality Type Fits You Best?", blurb: "A grounded type read, no horoscope energy." },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "YouMeQuiz — You know me. But how well?" },
+      { title: "YouMeQuiz — How well do you really know yourself?" },
       {
         name: "description",
         content:
-          "Answer five quick prompts and get a personalized 10-question game about your person. Share the link, no accounts, no downloads.",
+          "Take the 20-question Personality Patterns questionnaire and get a detailed, non-clinical report on how you handle emotion, conflict, closeness and decisions.",
       },
-      { property: "og:title", content: "YouMeQuiz" },
+      { property: "og:title", content: "YouMeQuiz — How well do you really know yourself?" },
       {
         property: "og:description",
-        content: "Five prompts, one personalized quiz, one link. No accounts, no downloads.",
+        content: "20 scenario questions. One substantive personality pattern report. No login.",
       },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://youmequiz.lovable.app/" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://youmequiz.lovable.app/" }],
   }),
   component: Home,
 });
 
 function Home() {
-  const [mine, setMine] = useState<MyGame[]>([]);
-
-  useEffect(() => {
-    setMine(listMyGames().filter((g) => g.id !== DEMO_GAME_ID));
-  }, []);
-
   return (
     <AppShell>
       <section className="rise-in pt-4">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1.5 text-xs font-semibold text-muted-foreground">
           <Sparkles className="size-3.5 text-primary" aria-hidden="true" />
-          You know me. But how well?
+          Self-discovery questionnaires
         </div>
-        <h1 className="text-[2.6rem] font-extrabold leading-[1.05]">
-          You know me.
+        <h1 className="text-[2.5rem] font-extrabold leading-[1.06]">
+          How well do you
           <br />
-          But <span className="text-warm">how well?</span>
+          really <span className="text-warm">know yourself?</span>
         </h1>
         <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-          Answer five nosy questions about your person. YouMeQuiz turns them into a playable quiz —
-          send the link and find out how well they actually know you.
+          Twenty everyday scenarios. One honest answer each. YouMeQuiz turns your full response
+          pattern into a detailed report on how you feel, communicate, handle conflict and decide.
         </p>
 
-        <div className="mt-6 flex flex-col gap-3">
+        <div className="mt-6">
           <Button asChild variant="hero" size="xl" className="w-full">
-            <Link to="/create">
-              Create your quiz
+            <Link to="/quiz">
+              Discover My Patterns
               <ArrowRight aria-hidden="true" />
-            </Link>
-          </Button>
-          <Button asChild variant="soft" size="xl" className="w-full">
-            <Link to="/game/$gameId" params={{ gameId: DEMO_GAME_ID }}>
-              Play the demo quiz
             </Link>
           </Button>
         </div>
 
         <div className="mt-4 flex items-center justify-center gap-4 text-xs text-muted-foreground">
           <span className="inline-flex items-center gap-1.5">
-            <Clock className="size-3.5" aria-hidden="true" /> ~60 seconds
+            <Clock className="size-3.5" aria-hidden="true" /> ~4 minutes
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <Link2 className="size-3.5" aria-hidden="true" /> No account
+            <Sparkles className="size-3.5" aria-hidden="true" /> 20 questions
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <Wand2 className="size-3.5" aria-hidden="true" /> 10 questions
+            <ShieldCheck className="size-3.5" aria-hidden="true" /> No account
           </span>
         </div>
       </section>
 
-      {mine.length > 0 && (
-        <section className="mt-9">
-          <h2 className="text-lg">Your quizzes</h2>
-          <ul className="mt-3 space-y-2">
-            {mine.map((g) => (
-              <li key={g.id}>
-                <Link
-                  to="/share/$gameId"
-                  params={{ gameId: g.id }}
-                  className="card-soft tap-scale flex items-center justify-between gap-3 px-4 py-3"
-                >
-                  <span className="min-w-0">
-                    <span className="block truncate text-sm font-semibold">
-                      {g.creatorName} & {g.recipientName}
-                    </span>
-                    <span className="block text-xs text-muted-foreground">
-                      {RELATIONSHIPS[g.relationship].label} · {EDITIONS[g.edition].label}
-                    </span>
-                  </span>
-                  <ArrowRight className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <section className="mt-10">
+        <h2 className="text-xl">Live now</h2>
+        <div className="card-soft mt-3 bg-warm p-5">
+          <p className="text-xs font-semibold uppercase tracking-wide text-primary-foreground/80">
+            Flagship questionnaire
+          </p>
+          <p className="mt-1 font-display text-2xl font-extrabold text-primary-foreground">
+            Personality Patterns
+          </p>
+          <p className="mt-2 text-sm leading-relaxed text-primary-foreground/90">
+            20 scenario-based questions scored across 14 behaviour dimensions — empathy, social
+            energy, assertiveness, boundaries, regulation and more. You get a pattern title, core
+            traits, strengths, blind spots and practical growth notes.
+          </p>
+          <Button asChild variant="soft" size="pill" className="mt-4 w-full">
+            <Link to="/quiz">Start the 20 questions</Link>
+          </Button>
+        </div>
+      </section>
 
       <section className="mt-10">
-        <h2 className="text-xl">Three rounds. Zero mercy.</h2>
+        <h2 className="text-xl">What you get</h2>
         <div className="mt-3 space-y-2.5">
           {[
-            { e: "🧠", t: "Do You Know Me?", d: "The basics. Obsessions, habits, tells." },
-            { e: "🧾", t: "The Receipts", d: "Inside jokes and memories, entered as evidence." },
-            { e: "🔮", t: "Predict Me", d: "Guess what they'd say before they say it." },
+            { e: "🧠", t: "A pattern, not a label", d: "Your report comes from all 20 answers together — never one." },
+            { e: "📊", t: "Clear scale scores", d: "0–100 questionnaire scale scores per dimension, plainly explained." },
+            { e: "🌱", t: "Constructive language", d: "Self-reflection only. No diagnoses, no pathologising." },
           ].map((r, i) => (
             <div
               key={r.t}
@@ -130,42 +121,39 @@ function Home() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl">Editions</h2>
+        <h2 className="text-xl">Coming soon</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Nothing is charged during beta — paid tiers are unlocked for now.
+          More self-discovery questionnaires are in the works.
         </p>
-        <div className="mt-3 space-y-2.5">
-          {(["free", "full", "memory"] as const).map((key) => {
-            const ed = EDITIONS[key];
-            return (
-              <div key={key} className="card-soft p-4">
-                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-                  <p className="min-w-0 truncate font-display text-base font-bold">{ed.label}</p>
-                  <span className="shrink-0 text-sm font-bold text-primary">{ed.price}</span>
-                </div>
-                <p className="mt-1 text-sm text-muted-foreground">{ed.perks.join(" · ")}</p>
-                {ed.badge && (
-                  <span className="mt-2 inline-block rounded-full bg-highlight px-2.5 py-1 text-[11px] font-bold text-highlight-foreground">
-                    {ed.badge} — no payment taken
-                  </span>
-                )}
+        <ul className="mt-3 space-y-2.5">
+          {COMING_SOON.map((c) => (
+            <li key={c.title} className="card-soft flex items-start gap-3 p-4 opacity-80">
+              <span className="text-xl" aria-hidden="true">
+                {c.emoji}
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="font-display text-base font-bold">{c.title}</p>
+                <p className="text-sm text-muted-foreground">{c.blurb}</p>
               </div>
-            );
-          })}
-        </div>
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-card px-2.5 py-1 text-[11px] font-bold text-muted-foreground">
+                <Lock className="size-3" aria-hidden="true" />
+                Soon
+              </span>
+            </li>
+          ))}
+        </ul>
       </section>
 
-      <section className="mt-10 card-soft bg-warm p-5 text-center">
-        <p className="font-display text-xl font-bold text-primary-foreground">
-          Someone deserves this today.
-        </p>
-        <Button asChild variant="soft" size="pill" className="mt-3 w-full">
-          <Link to="/create">Make one about them</Link>
+      <section className="card-soft mt-10 p-5 text-center">
+        <p className="font-display text-xl font-bold">Ready to meet your patterns?</p>
+        <Button asChild variant="hero" size="pill" className="mt-3 w-full">
+          <Link to="/quiz">Discover My Patterns</Link>
         </Button>
       </section>
 
       <footer className="mt-10 text-center text-xs text-muted-foreground">
-        YouMeQuiz beta · quizzes are saved in the cloud, so any link works on any device.
+        YouMeQuiz is for self-reflection and entertainment. It is not a psychological or medical
+        assessment.
       </footer>
     </AppShell>
   );

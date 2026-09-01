@@ -79,17 +79,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "YouMeQuiz — You know me. But how well?" },
+      { title: "YouMeQuiz — How well do you really know yourself?" },
       {
         name: "description",
         content:
-          "YouMeQuiz turns five quick prompts into a personalized 10-question quiz about you two. Share the link, watch them squirm.",
+          "YouMeQuiz turns 20 everyday scenarios into a detailed, non-clinical report on your personality patterns.",
       },
       { property: "og:title", content: "YouMeQuiz" },
       {
         property: "og:description",
-        content: "You know me. But how well? Make a personalized quiz about you two in 60 seconds.",
+        content: "How well do you really know yourself? 20 questions, one pattern report.",
       },
+      { property: "og:site_name", content: "YouMeQuiz" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
