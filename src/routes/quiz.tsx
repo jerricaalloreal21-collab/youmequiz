@@ -35,7 +35,7 @@ function QuizPage() {
   const [done, setDone] = useState(false);
 
   const total = QUESTIONS.length;
-  const question = QUESTIONS[index];
+  const question = QUESTIONS[Math.min(index, total - 1)]!;
 
   const report = useMemo(() => (done ? buildReport(scoreAnswers(answers)) : null), [done, answers]);
 
