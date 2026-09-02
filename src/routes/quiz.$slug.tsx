@@ -19,7 +19,7 @@ function QuestionnairePage(){
   function choose(category:string){const next={...answers,[index]:category};setAnswers(next);if(index===quiz.questions.length-1)setDone(true);else setIndex(index+1)}
   function restart(){setAnswers({});setIndex(0);setDone(false);window.scrollTo({top:0})}
   if(done&&result) return <Result quiz={quiz} result={result} restart={restart}/>;
-  const question=quiz.questions[index]; const pct=Math.round(index/quiz.questions.length*100);
+  const question=quiz.questions[index]!; const pct=Math.round(index/quiz.questions.length*100);
   return <AppShell><section className="rise-in pt-2">
     <Link to="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground"><ArrowLeft className="size-4"/> All questionnaires</Link>
     <div className="mt-5 flex justify-between text-xs font-semibold text-muted-foreground"><span>Question {index+1} of {quiz.questions.length}</span><span>{pct}%</span></div>
@@ -36,8 +36,8 @@ function Result({quiz,result,restart}:{quiz:Questionnaire;result:ReturnType<type
  const max=quiz.questions.length;
  return <AppShell><section className="rise-in pt-2">
   <p className="text-xs font-semibold uppercase tracking-wide text-accent">{quiz.emoji} Your result</p><h1 className="mt-2 text-[2.15rem] font-extrabold leading-tight">{result.primary.title}</h1><p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{result.primary.summary}</p>
-  <section className="mt-8"><h2 className="text-lg">Your strongest patterns</h2><div className="mt-3 space-y-3">{Object.entries(result.totals).sort((a,b)=>b[1]-a[1]).map(([key,value])=><div key={key}><div className="flex justify-between text-sm"><span className="font-semibold">{quiz.categories[key].title}</span><span className="text-primary">{value}/{max}</span></div><div className="mt-1 h-2 overflow-hidden rounded-full bg-card"><div className="h-full rounded-full bg-accent" style={{width:`${value/max*100}%`}}/></div></div>)}</div></section>
-  <Block title="What this gives you"><ul className="space-y-2">{result.primary.strengths.map(x=><li key={x} className="card-soft p-3.5 text-sm text-muted-foreground">{x}</li>)}</ul></Block>
+  <section className="mt-8"><h2 className="text-lg">Your strongest patterns</h2><div className="mt-3 space-y-3">{Object.entries(result.totals).sort((a,b)=>b[1]-a[1]).map(([key,value])=><div key={key}><div className="flex justify-between text-sm"><span className="font-semibold">{quiz.categories[key]?.title ?? key}</span><span className="text-primary">{value}/{max}</span></div><div className="mt-1 h-2 overflow-hidden rounded-full bg-card"><div className="h-full rounded-full bg-accent" style={{width:`${value/max*100}%`}}/></div></div>)}</div></section>
+  <Block title="What this gives you"><ul className="space-y-2">{(result.primary.strengths ?? []).map(x=><li key={x} className="card-soft p-3.5 text-sm text-muted-foreground">{x}</li>)}</ul></Block>
   <Block title="Your secondary pattern"><p className="text-sm leading-relaxed text-muted-foreground"><b>{result.secondary.title}:</b> {result.secondary.summary} Your result is a blend, so this pattern may show up in certain people or situations.</p></Block>
   <Block title="Worth watching"><p className="text-sm leading-relaxed text-muted-foreground">{result.primary.watch}</p></Block>
   <Block title="Try this"><p className="card-soft p-4 text-sm leading-relaxed text-muted-foreground">{result.primary.tip}</p></Block>

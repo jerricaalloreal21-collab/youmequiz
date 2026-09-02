@@ -98,7 +98,7 @@ export function scoreQuestionnaireBySlug(slug: string, answers: Record<string, s
     totalQuestions: quiz.questions.length,
     scaleScores: Object.entries(result.totals).map(([key, value]) => ({
       key,
-      label: quiz.categories[key].title,
+      label: quiz.categories[key]?.title ?? key,
       scaleScore: value,
       outOf: quiz.questions.length,
     })),

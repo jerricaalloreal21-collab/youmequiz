@@ -53,7 +53,7 @@ const stressQuestions = [
   ["Your to-do list grows faster than you can finish it.","overload"],["You are waiting on an answer that affects your future.","uncertainty"],["Two people around you are angry with each other.","conflict"],["Someone else makes a decision that changes your day.","control"],["You are compared publicly with someone doing better.","pressure"],
   ["Noise, interruptions, and requests all hit at once.","overload"],["Instructions are vague but the consequences matter.","uncertainty"],["You receive criticism in a sharp tone.","conflict"],["Technology fails right before something important.","control"],["You make a visible mistake.","pressure"],
   ["Several people need something from you at the same time.","overload"],["A message is read but unanswered for hours.","uncertainty"],["You know someone is upset but they deny it.","conflict"],["You must depend on an unreliable person.","control"],["You feel you must prove you deserve your place.","pressure"],
-].map(([prompt,category])=>q(prompt,{[category]:"This would hit me hard",overload:category==="overload"?"I would feel swamped":"My first reaction would be mental overload",uncertainty:category==="uncertainty"?"The unknown would consume me":"I would mainly worry about what happens next",conflict:category==="conflict"?"The tension would stay with me":"I would focus most on people's reactions",control:category==="control"?"Losing control would bother me":"I would immediately try to regain control",pressure:category==="pressure"?"I would feel judged":"I would worry about doing it wrong"}));
+].map(([prompt,category]:string[])=>q(prompt as string,{[category as string]:"This would hit me hard",overload:category==="overload"?"I would feel swamped":"My first reaction would be mental overload",uncertainty:category==="uncertainty"?"The unknown would consume me":"I would mainly worry about what happens next",conflict:category==="conflict"?"The tension would stay with me":"I would focus most on people's reactions",control:category==="control"?"Losing control would bother me":"I would immediately try to regain control",pressure:category==="pressure"?"I would feel judged":"I would worry about doing it wrong"}));
 
 const attachmentCategories: Record<string, ResultCopy> = {
   secure:{title:"Mostly Secure",summary:"You tend to balance closeness with independence and address relationship concerns directly.",strengths:["You can receive care without losing yourself.","You are generally willing to repair after conflict."],watch:"Security can still wobble with inconsistent or unsafe people.",tip:"Keep choosing clear communication, reciprocal effort, and relationships where repair is possible."},
@@ -92,8 +92,14 @@ export const questionnaireBySlug = (slug: string) => QUESTIONNAIRES.find(x=>x.sl
 
 export function scoreQuestionnaire(questionnaire: Questionnaire, answers: Record<number,string>) {
   const totals: Record<string,number> = Object.fromEntries(Object.keys(questionnaire.categories).map(k=>[k,0]));
-  Object.values(answers).forEach(k=>{ if(k in totals) totals[k] += 1; });
+  Object.values(answers).forEach(k=>{ if(k in totals) totals[k] = (totals[k] ?? 0) + 1; });
   const ranked=Object.entries(totals).sort((a,b)=>b[1]-a[1]);
-  const [primary,secondary]=ranked;
-  return { primary:{key:primary[0],score:primary[1],...questionnaire.categories[primary[0]]}, secondary:{key:secondary[0],score:secondary[1],...questionnaire.categories[secondary[0]]}, totals };
+  const fallback: ResultCopy = { title:"Mixed pattern", summary:"Your answers spread fairly evenly across the patterns in this questionnaire.", strengths:["You adapt to what a situation asks of you."], watch:"A blended pattern can make it harder to name what you need.", tip:"Notice which pattern shows up most in the relationships that matter most." };
+  const pick = (i: number) => {
+    const entry = ranked[i];
+    if (!entry) return { key: "mixed", score: 0, ...fallback };
+    const copy = questionnaire.categories[entry[0]] ?? fallback;
+    return { key: entry[0], score: entry[1], ...copy };
+  };
+  return { primary: pick(0), secondary: pick(1), totals };
 }
