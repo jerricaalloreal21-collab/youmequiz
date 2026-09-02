@@ -1,16 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Clock, Lock, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Clock, ShieldCheck, Sparkles } from "lucide-react";
 
 import { AppShell } from "@/components/AppShell";
 import { Button } from "@/components/ui/button";
 
-const COMING_SOON = [
-  { emoji: "💗", title: "How Do You Feel Most Loved?", blurb: "The signals that actually land for you." },
-  { emoji: "🌩️", title: "What Triggers Your Stress Response?", blurb: "Your personal pressure points, mapped." },
-  { emoji: "🧷", title: "What's Your Attachment Style?", blurb: "How you move toward and away from closeness." },
-  { emoji: "🚧", title: "How Strong Are Your Boundaries?", blurb: "Where you hold the line — and where you don't." },
-  { emoji: "🧭", title: "Which Personality Type Fits You Best?", blurb: "A grounded type read, no horoscope energy." },
-];
+import { QUESTIONNAIRES } from "@/lib/questionnaires";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -121,24 +115,21 @@ function Home() {
       </section>
 
       <section className="mt-10">
-        <h2 className="text-xl">Coming soon</h2>
+        <h2 className="text-xl">More questionnaires</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          More self-discovery questionnaires are in the works.
+          Five more ways to understand what makes you tick.
         </p>
         <ul className="mt-3 space-y-2.5">
-          {COMING_SOON.map((c) => (
-            <li key={c.title} className="card-soft flex items-start gap-3 p-4 opacity-80">
+          {QUESTIONNAIRES.map((c) => (
+            <li key={c.title} className="card-soft flex items-start gap-3 p-4">
               <span className="text-xl" aria-hidden="true">
                 {c.emoji}
               </span>
               <div className="min-w-0 flex-1">
                 <p className="font-display text-base font-bold">{c.title}</p>
-                <p className="text-sm text-muted-foreground">{c.blurb}</p>
+                <p className="text-sm text-muted-foreground">{c.short}</p>
               </div>
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-card px-2.5 py-1 text-[11px] font-bold text-muted-foreground">
-                <Lock className="size-3" aria-hidden="true" />
-                Soon
-              </span>
+              <Button asChild variant="soft" size="sm"><Link to="/quiz/$slug" params={{slug:c.slug}}>Start</Link></Button>
             </li>
           ))}
         </ul>
