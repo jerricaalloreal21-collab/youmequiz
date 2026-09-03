@@ -15,13 +15,17 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 
 
 function NotFoundComponent() {
+  const router = useRouter();
+  useEffect(() => {
+    const t = setTimeout(() => router.navigate({ to: "/", replace: true }), 1200);
+    return () => clearTimeout(t);
+  }, [router]);
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
+        <h2 className="text-xl font-semibold text-foreground">That page has moved</h2>
         <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+          Taking you to the YouMeQuiz questionnaires…
         </p>
         <div className="mt-6">
           <Link
@@ -35,6 +39,7 @@ function NotFoundComponent() {
     </div>
   );
 }
+
 
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
