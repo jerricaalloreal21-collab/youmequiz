@@ -11,7 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SplatRouteImport } from './routes/$'
-import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as QuizIndexRouteImport } from './routes/quiz.index'
 import { Route as QuizSlugRouteImport } from './routes/quiz.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,9 +24,9 @@ const SplatRoute = SplatRouteImport.update({
   path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const QuizRoute = QuizRouteImport.update({
-  id: '/quiz',
-  path: '/quiz',
+const QuizIndexRoute = QuizIndexRouteImport.update({
+  id: '/quiz/',
+  path: '/quiz/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizSlugRoute = QuizSlugRouteImport.update({
@@ -38,34 +38,34 @@ const QuizSlugRoute = QuizSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
-  '/quiz': typeof QuizRouteWithChildren
   '/quiz/$slug': typeof QuizSlugRoute
+  '/quiz/': typeof QuizIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
-  '/quiz': typeof QuizRouteWithChildren
   '/quiz/$slug': typeof QuizSlugRoute
+  '/quiz': typeof QuizIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$': typeof SplatRoute
-  '/quiz': typeof QuizRouteWithChildren
   '/quiz/$slug': typeof QuizSlugRoute
+  '/quiz/': typeof QuizIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$' | '/quiz' | '/quiz/$slug'
+  fullPaths: '/' | '/$' | '/quiz/$slug' | '/quiz/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$' | '/quiz' | '/quiz/$slug'
-  id: '__root__' | '/' | '/$' | '/quiz' | '/quiz/$slug'
+  to: '/' | '/$' | '/quiz/$slug' | '/quiz'
+  id: '__root__' | '/' | '/$' | '/quiz/$slug' | '/quiz/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SplatRoute: typeof SplatRoute
-  QuizRoute: typeof QuizRouteWithChildren
+  QuizIndexRoute: typeof QuizIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -84,11 +84,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/quiz': {
-      id: '/quiz'
+    '/quiz/': {
+      id: '/quiz/'
       path: '/quiz'
-      fullPath: '/quiz'
-      preLoaderRoute: typeof QuizRouteImport
+      fullPath: '/quiz/'
+      preLoaderRoute: typeof QuizIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quiz/$slug': {
@@ -101,20 +101,10 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface QuizRouteChildren {
-  QuizSlugRoute: typeof QuizSlugRoute
-}
-
-const QuizRouteChildren: QuizRouteChildren = {
-  QuizSlugRoute: QuizSlugRoute,
-}
-
-const QuizRouteWithChildren = QuizRoute._addFileChildren(QuizRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
-  QuizRoute: QuizRouteWithChildren,
+  QuizIndexRoute: QuizIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
