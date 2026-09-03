@@ -8,7 +8,7 @@ import { QUESTIONS } from "@/lib/quiz/questions";
 import { scoreAnswers, type Answers } from "@/lib/quiz/score";
 import { buildReport, DISCLAIMER } from "@/lib/quiz/report";
 
-export const Route = createFileRoute("/quiz")({
+export const Route = createFileRoute("/quiz/")({
   head: () => ({
     meta: [
       { title: "The 20-question pattern questionnaire — YouMeQuiz" },
