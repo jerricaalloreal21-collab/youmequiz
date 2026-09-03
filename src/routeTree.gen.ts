@@ -24,9 +24,9 @@ const QuizIndexRoute = QuizIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizSlugRoute = QuizSlugRouteImport.update({
-  id: '/quiz/$slug',
-  path: '/quiz/$slug',
-  getParentRoute: () => rootRouteImport,
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => QuizRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -55,7 +55,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  QuizSlugRoute: typeof QuizSlugRoute
   QuizIndexRoute: typeof QuizIndexRoute
 }
 
@@ -77,17 +76,16 @@ declare module '@tanstack/react-router' {
     }
     '/quiz/$slug': {
       id: '/quiz/$slug'
-      path: '/quiz/$slug'
+      path: '/$slug'
       fullPath: '/quiz/$slug'
       preLoaderRoute: typeof QuizSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof QuizRoute
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  QuizSlugRoute: QuizSlugRoute,
   QuizIndexRoute: QuizIndexRoute,
 }
 export const routeTree = rootRouteImport
