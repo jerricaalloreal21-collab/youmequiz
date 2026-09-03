@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { questionnaireBySlug, scoreQuestionnaire, type Questionnaire } from "@/lib/questionnaires";
 
 export const Route = createFileRoute("/quiz/$slug")({
-  loader: ({ params }) => { const quiz=questionnaireBySlug(params.slug); if(!quiz) throw notFound(); return quiz; },
+  loader: ({ params }) => { console.log("SLUG_LOADER",JSON.stringify(params)); const quiz=questionnaireBySlug(params.slug); if(!quiz) throw notFound(); return quiz; },
   head: ({ loaderData }) => ({ meta:[{title:`${loaderData?.title ?? "Questionnaire"} — YouMeQuiz`},{name:"description",content:loaderData?.short ?? "A 20-question YouMeQuiz questionnaire."}] }),
   component: QuestionnairePage,
 });
