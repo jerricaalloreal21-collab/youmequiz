@@ -10,18 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SplatRouteImport } from './routes/$'
 import { Route as QuizIndexRouteImport } from './routes/quiz.index'
 import { Route as QuizSlugRouteImport } from './routes/quiz.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SplatRoute = SplatRouteImport.update({
-  id: '/$',
-  path: '/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizIndexRoute = QuizIndexRouteImport.update({
@@ -37,34 +31,30 @@ const QuizSlugRoute = QuizSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$': typeof SplatRoute
   '/quiz/$slug': typeof QuizSlugRoute
   '/quiz/': typeof QuizIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$': typeof SplatRoute
   '/quiz/$slug': typeof QuizSlugRoute
   '/quiz': typeof QuizIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$': typeof SplatRoute
   '/quiz/$slug': typeof QuizSlugRoute
   '/quiz/': typeof QuizIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$' | '/quiz/$slug' | '/quiz/'
+  fullPaths: '/' | '/quiz/$slug' | '/quiz/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$' | '/quiz/$slug' | '/quiz'
-  id: '__root__' | '/' | '/$' | '/quiz/$slug' | '/quiz/'
+  to: '/' | '/quiz/$slug' | '/quiz'
+  id: '__root__' | '/' | '/quiz/$slug' | '/quiz/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SplatRoute: typeof SplatRoute
   QuizSlugRoute: typeof QuizSlugRoute
   QuizIndexRoute: typeof QuizIndexRoute
 }
@@ -76,13 +66,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/$': {
-      id: '/$'
-      path: '/$'
-      fullPath: '/$'
-      preLoaderRoute: typeof SplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quiz/': {
@@ -104,7 +87,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SplatRoute: SplatRoute,
   QuizSlugRoute: QuizSlugRoute,
   QuizIndexRoute: QuizIndexRoute,
 }
