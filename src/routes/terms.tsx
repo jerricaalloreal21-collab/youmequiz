@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 
 export const Route = createFileRoute("/terms")({
@@ -40,6 +40,14 @@ function Terms() {
           We may revise questionnaires, results or these terms and may change or discontinue
           features. The site is provided as available without a promise that every feature will
           always be uninterrupted or error-free.
+        </p>
+        <h2 className="text-xl text-foreground">Contact</h2>
+        <p>
+          Questions about these terms can be sent through the{" "}
+          <Link to="/contact" className="font-semibold text-primary">
+            Contact page
+          </Link>
+          .
         </p>
       </article>
     </AppShell>
