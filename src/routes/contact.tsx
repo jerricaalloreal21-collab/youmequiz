@@ -9,6 +9,13 @@ export const Route = createFileRoute("/contact")({
         name: "description",
         content: "Contact YouMeQuiz with questions, feedback, privacy requests or site issues.",
       },
+      { property: "og:title", content: "Contact YouMeQuiz" },
+      {
+        property: "og:description",
+        content: "Get in touch with YouMeQuiz about feedback, privacy requests or site issues.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Contact,
