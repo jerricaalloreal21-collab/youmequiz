@@ -142,10 +142,35 @@ function Home() {
         </Button>
       </section>
 
-      <footer className="mt-10 text-center text-xs text-muted-foreground">
+      <section className="mt-10 space-y-4 text-sm leading-relaxed text-muted-foreground">
+        <h2 className="text-xl text-foreground">How YouMeQuiz works</h2>
+        <p>
+          Each questionnaire presents 20 everyday situations with several possible responses. Your
+          choices are grouped into clearly named patterns, then summarized in plain language so you
+          can reflect on habits that may be easy to miss in the moment.
+        </p>
+        <p>
+          Results are educational and personal to the answers you select. They are not medical
+          advice, a mental-health diagnosis, or a guarantee about relationships or compatibility.
+          There are no right or wrong results, and you can retake any questionnaire as your
+          perspective changes.
+        </p>
+      </section>
+
+      <footer className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
+        <nav
+          className="mb-3 flex flex-wrap justify-center gap-x-4 gap-y-2"
+          aria-label="Site information"
+        >
+          <Link to="/about">About</Link>
+          <Link to="/methodology">Methodology</Link>
+          <Link to="/privacy">Privacy</Link>
+          <Link to="/terms">Terms</Link>
+        </nav>
         YouMeQuiz is for self-reflection and entertainment. It is not a psychological or medical
         assessment.
       </footer>
+
     </AppShell>
   );
 }
