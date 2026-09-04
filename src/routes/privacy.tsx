@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppShell } from "@/components/AppShell";
 
 export const Route = createFileRoute("/privacy")({
@@ -42,6 +42,14 @@ function Privacy() {
         <p>
           You may block or delete cookies through your browser. Doing so can affect advertising or
           some site functions.
+        </p>
+        <h2 className="text-xl text-foreground">Contact</h2>
+        <p>
+          For privacy questions or requests, visit the{" "}
+          <Link to="/contact" className="font-semibold text-primary">
+            Contact page
+          </Link>
+          .
         </p>
       </article>
     </AppShell>
