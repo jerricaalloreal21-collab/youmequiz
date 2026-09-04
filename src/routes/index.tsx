@@ -166,6 +166,7 @@ function Home() {
           <Link to="/methodology">Methodology</Link>
           <Link to="/privacy">Privacy</Link>
           <Link to="/terms">Terms</Link>
+          <Link to="/contact">Contact</Link>
         </nav>
         YouMeQuiz is for self-reflection and entertainment. It is not a psychological or medical
         assessment.
