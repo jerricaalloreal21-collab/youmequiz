@@ -83,11 +83,8 @@
   --ring: oklch(0.7 0.21 345);
   --ink-line: oklch(1 0 0 / 10%);
   --gradient-warm: linear-gradient(135deg, oklch(0.72 0.2 335), oklch(0.6 0.22 295));
-  --gradient-dream: radial-gradient(
-      120% 90% at 12% -8%,
-      oklch(0.36 0.14 330 / 0.55) 0%,
-      transparent 60%
-    ),
+  --gradient-dream:
+    radial-gradient(120% 90% at 12% -8%, oklch(0.36 0.14 330 / 0.55) 0%, transparent 60%),
     radial-gradient(100% 80% at 96% 4%, oklch(0.42 0.11 200 / 0.4) 0%, transparent 58%),
     linear-gradient(180deg, oklch(0.2 0.05 270) 0%, oklch(0.17 0.04 268) 100%);
 }
@@ -216,4 +213,3 @@
     transition-duration: 0.01ms !important;
   }
 }
-

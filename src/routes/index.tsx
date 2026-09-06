@@ -93,9 +93,21 @@ function Home() {
         <h2 className="text-xl">What you get</h2>
         <div className="mt-3 space-y-2.5">
           {[
-            { e: "🧠", t: "A pattern, not a label", d: "Your report comes from all 20 answers together — never one." },
-            { e: "📊", t: "Clear scale scores", d: "0–100 questionnaire scale scores per dimension, plainly explained." },
-            { e: "🌱", t: "Constructive language", d: "Self-reflection only. No diagnoses, no pathologising." },
+            {
+              e: "🧠",
+              t: "A pattern, not a label",
+              d: "Your report comes from all 20 answers together — never one.",
+            },
+            {
+              e: "📊",
+              t: "Clear scale scores",
+              d: "0–100 questionnaire scale scores per dimension, plainly explained.",
+            },
+            {
+              e: "🌱",
+              t: "Constructive language",
+              d: "Self-reflection only. No diagnoses, no pathologising.",
+            },
           ].map((r, i) => (
             <div
               key={r.t}
@@ -129,7 +141,11 @@ function Home() {
                 <p className="font-display text-base font-bold">{c.title}</p>
                 <p className="text-sm text-muted-foreground">{c.short}</p>
               </div>
-              <Button asChild variant="soft" size="sm"><Link to="/quiz/$slug" params={{slug:c.slug}}>Start</Link></Button>
+              <Button asChild variant="soft" size="sm">
+                <Link to="/quiz/$slug" params={{ slug: c.slug }}>
+                  Start
+                </Link>
+              </Button>
             </li>
           ))}
         </ul>
@@ -171,7 +187,6 @@ function Home() {
         YouMeQuiz is for self-reflection and entertainment. It is not a psychological or medical
         assessment.
       </footer>
-
     </AppShell>
   );
 }
