@@ -107,7 +107,9 @@ function QuizPage() {
           >
             <ArrowLeft className="size-4" aria-hidden="true" /> Back
           </button>
-          <span className="text-xs text-muted-foreground">No account. Answers stay in your browser.</span>
+          <span className="text-xs text-muted-foreground">
+            No account. Answers stay in your browser.
+          </span>
         </div>
       </section>
     </AppShell>

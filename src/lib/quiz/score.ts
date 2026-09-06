@@ -27,7 +27,10 @@ function bandFor(value: number): DimensionScore["band"] {
  * dimensions covered by few items are not under- or over-weighted.
  */
 export function scoreAnswers(answers: Answers, questions: QuizQuestion[] = QUESTIONS): ScoreMap {
-  const raw = {} as Record<DimensionKey, { actual: number; min: number; max: number; items: number }>;
+  const raw = {} as Record<
+    DimensionKey,
+    { actual: number; min: number; max: number; items: number }
+  >;
   for (const key of DIMENSION_ORDER) raw[key] = { actual: 0, min: 0, max: 0, items: 0 };
 
   for (const question of questions) {

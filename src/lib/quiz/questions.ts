@@ -23,7 +23,8 @@ export const QUESTIONS: QuizQuestion[] = [
   {
     id: "q1",
     scene: "Friday, 6:41pm",
-    prompt: "A group plan you were looking forward to gets cancelled an hour before. What actually happens in you?",
+    prompt:
+      "A group plan you were looking forward to gets cancelled an hour before. What actually happens in you?",
     options: [
       {
         id: "a",
@@ -60,7 +61,12 @@ export const QUESTIONS: QuizQuestion[] = [
       {
         id: "b",
         text: "Laugh along, then reread it three times later.",
-        scores: { rejectionSensitivity: 2, approvalSeeking: 2, sensitivity: 1, conflictDirectness: -1 },
+        scores: {
+          rejectionSensitivity: 2,
+          approvalSeeking: 2,
+          sensitivity: 1,
+          conflictDirectness: -1,
+        },
       },
       {
         id: "c",
@@ -151,7 +157,12 @@ export const QUESTIONS: QuizQuestion[] = [
       {
         id: "d",
         text: "Go quiet and hope the question resolves itself.",
-        scores: { conflictDirectness: -2, rejectionSensitivity: 1, boundaries: -1, assertiveness: -2 },
+        scores: {
+          conflictDirectness: -2,
+          rejectionSensitivity: 1,
+          boundaries: -1,
+          assertiveness: -2,
+        },
       },
     ],
   },
@@ -259,7 +270,12 @@ export const QUESTIONS: QuizQuestion[] = [
       {
         id: "d",
         text: "Delay. Deciding while unsure feels worse than waiting.",
-        scores: { impulsivity: -2, rejectionSensitivity: 1, assertiveness: -1, conscientiousness: 1 },
+        scores: {
+          impulsivity: -2,
+          rejectionSensitivity: 1,
+          assertiveness: -1,
+          conscientiousness: 1,
+        },
       },
     ],
   },
@@ -416,7 +432,12 @@ export const QUESTIONS: QuizQuestion[] = [
       {
         id: "c",
         text: "You send a follow-up to close the loop.",
-        scores: { assertiveness: 1, impulsivity: 1, rejectionSensitivity: 1, conflictDirectness: 1 },
+        scores: {
+          assertiveness: 1,
+          impulsivity: 1,
+          rejectionSensitivity: 1,
+          conflictDirectness: 1,
+        },
       },
       {
         id: "d",
