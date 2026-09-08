@@ -116,6 +116,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         async: true,
         crossOrigin: "anonymous",
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "YouMeQuiz",
+          url: "https://youmequiz.lovable.app/",
+          description:
+            "Free scenario-based self-discovery questionnaires with instant, non-clinical pattern reports.",
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
