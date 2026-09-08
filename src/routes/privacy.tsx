@@ -9,7 +9,16 @@ export const Route = createFileRoute("/privacy")({
         name: "description",
         content: "How YouMeQuiz handles questionnaire answers, cookies and advertising data.",
       },
+      { property: "og:title", content: "Privacy Policy — YouMeQuiz" },
+      {
+        property: "og:description",
+        content: "How YouMeQuiz handles answers, cookies and advertising data.",
+      },
+      { property: "og:type", content: "article" },
+      { property: "og:url", content: "https://youmequiz.lovable.app/privacy" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://youmequiz.lovable.app/privacy" }],
   }),
   component: Privacy,
 });

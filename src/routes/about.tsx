@@ -4,13 +4,22 @@ import { AppShell } from "@/components/AppShell";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About YouMeQuiz" },
+      { title: "About YouMeQuiz — Self-reflection questionnaires" },
       {
         name: "description",
         content:
           "Learn what YouMeQuiz creates and how its self-reflection questionnaires are designed.",
       },
+      { property: "og:title", content: "About YouMeQuiz — Self-reflection questionnaires" },
+      {
+        property: "og:description",
+        content: "Who makes YouMeQuiz and how the questionnaires are designed.",
+      },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://youmequiz.lovable.app/about" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://youmequiz.lovable.app/about" }],
   }),
   component: About,
 });

@@ -11,19 +11,35 @@ import { buildReport, DISCLAIMER } from "@/lib/quiz/report";
 export const Route = createFileRoute("/quiz/")({
   head: () => ({
     meta: [
-      { title: "The 20-question pattern questionnaire — YouMeQuiz" },
+      { title: "Personality Patterns: 20-Question Quiz — YouMeQuiz" },
       {
         name: "description",
         content:
           "Twenty everyday scenarios, one honest answer each. Get a detailed pattern report on how you handle emotion, conflict, closeness and decisions.",
       },
-      { property: "og:title", content: "The 20-question pattern questionnaire" },
+      { property: "og:title", content: "Personality Patterns: 20-Question Quiz — YouMeQuiz" },
       {
         property: "og:description",
         content: "Twenty scenarios. One pattern report about how you actually operate.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://youmequiz.lovable.app/quiz" },
       { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "https://youmequiz.lovable.app/quiz" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Quiz",
+          name: "Personality Patterns",
+          url: "https://youmequiz.lovable.app/quiz",
+          educationalLevel: "beginner",
+          about: { "@type": "Thing", name: "Personality patterns and self-reflection" },
+          numberOfQuestions: 20,
+        }),
+      },
     ],
   }),
   component: QuizPage,

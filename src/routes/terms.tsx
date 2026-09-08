@@ -9,7 +9,16 @@ export const Route = createFileRoute("/terms")({
         name: "description",
         content: "Terms governing use of the YouMeQuiz website and questionnaire results.",
       },
+      { property: "og:title", content: "Terms of Use — YouMeQuiz" },
+      {
+        property: "og:description",
+        content: "The terms that govern use of YouMeQuiz and its questionnaire results.",
+      },
+      { property: "og:type", content: "article" },
+      { property: "og:url", content: "https://youmequiz.lovable.app/terms" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://youmequiz.lovable.app/terms" }],
   }),
   component: Terms,
 });
