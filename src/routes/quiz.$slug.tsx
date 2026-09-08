@@ -11,15 +11,54 @@ export const Route = createFileRoute("/quiz/$slug")({
     if (!quiz) throw notFound();
     return quiz;
   },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.title ?? "Questionnaire"} — YouMeQuiz` },
-      {
-        name: "description",
-        content: loaderData?.short ?? "A 20-question YouMeQuiz questionnaire.",
-      },
-    ],
-  }),
+  head: ({ params, loaderData }) => {
+    const title = `${loaderData?.title ?? "Questionnaire"} — 20 Questions — YouMeQuiz`;
+    const description =
+      loaderData?.short ??
+      "A free 20-question YouMeQuiz questionnaire with an instant pattern report.";
+    const url = `https://youmequiz.lovable.app/quiz/${params.slug}`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: url },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Quiz",
+            name: loaderData?.title ?? "Questionnaire",
+            description,
+            url,
+            numberOfQuestions: loaderData?.questions?.length ?? 20,
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://youmequiz.lovable.app/",
+              },
+              { "@type": "ListItem", position: 2, name: loaderData?.title ?? "Questionnaire", item: url },
+            ],
+          }),
+        },
+      ],
+    };
+  },
   component: QuestionnairePage,
 });
 

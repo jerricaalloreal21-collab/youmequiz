@@ -9,7 +9,16 @@ export const Route = createFileRoute("/methodology")({
         name: "description",
         content: "How YouMeQuiz questions, pattern scores and results are created and interpreted.",
       },
+      { property: "og:title", content: "Questionnaire Methodology — YouMeQuiz" },
+      {
+        property: "og:description",
+        content: "How YouMeQuiz builds its 20-question scenarios and scores the results.",
+      },
+      { property: "og:type", content: "article" },
+      { property: "og:url", content: "https://youmequiz.lovable.app/methodology" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://youmequiz.lovable.app/methodology" }],
   }),
   component: Methodology,
 });
