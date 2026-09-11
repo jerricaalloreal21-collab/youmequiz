@@ -66,12 +66,12 @@ function Home() {
           <br />
           really <span className="text-warm">know yourself?</span>
         </h1>
-        <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-          Twenty everyday scenarios. One honest answer each. YouMeQuiz turns your full response
-          pattern into a detailed report on how you feel, communicate, handle conflict and decide.
+        <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+          20 quick scenarios. One detailed report on how you feel, communicate, handle conflict and
+          decide.
         </p>
 
-        <div className="mt-6">
+        <div className="mt-5">
           <Button asChild variant="hero" size="xl" className="w-full">
             <Link to="/quiz">
               Discover My Patterns
