@@ -25,6 +25,30 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://youmequiz.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "YouMeQuiz self-discovery questionnaires",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Personality Patterns",
+              url: "https://youmequiz.lovable.app/quiz",
+            },
+            ...QUESTIONNAIRES.map((c, i) => ({
+              "@type": "ListItem",
+              position: i + 2,
+              name: c.title,
+              url: `https://youmequiz.lovable.app/quiz/${c.slug}`,
+            })),
+          ],
+        }),
+      },
+    ],
   }),
   component: Home,
 });
